@@ -1,6 +1,6 @@
 ;; == package mgmt ==========================================================
 
-(require 'cask "~/.cask/cask.el")
+(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el")
 (cask-initialize)
 
 ;; -- load everything from dotfiles-init-dir ---------------------------------
@@ -25,12 +25,13 @@
 
 (require 'sanity)
 
-(require 'lfe-mode)
-
 ;;(require 'rails-dev-env)
 
 
 ;; == window control =========================================================
+(add-to-list 'default-frame-alist '(height . 50))
+(add-to-list 'default-frame-alist '(width . 100))
+
 (global-set-key "\C-c=" 'v-resize)
 (global-set-key "\C-c}" 'h-resize)
 
@@ -70,6 +71,7 @@
 (setq inhibit-startup-message t)
 (fset 'yes-or-no-p 'y-or-n-p)
 (menu-bar-mode -1)
+(tool-bar-mode -1)
 
 ;; -- rows and columns -------------------------------------------------------
 (setq line-number-mode t)
@@ -80,7 +82,7 @@
 
 ;; -- look -------------------------------------------------------------------
 (setq default-line-spacing 5)
-(set-default-font "Georgia-18")
+(set-default-font "Monaco-13")
 
 ;; -- coding -----------------------------------------------------------------
 (setq tags-table-list
@@ -102,7 +104,9 @@
 ;; == themes =================================================================
 
 ;; It's in Cask now instead /themes. Yay!
-(load-theme 'zenburn t)
+;(load-theme 'misterioso t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/blackboard-theme")
+(load-theme 'blackboard t) 
 
 ;; == projectile setup from http://crypt.codemancers.com/posts/2013-09-26-setting-up-emacs-as-development-environment-on-osx/?utm_source=rubyweekly&utm_medium=email
 
@@ -112,6 +116,7 @@
 (projectile-global-mode)
 (setq projectile-enable-caching t)
 (setq projectile-completion-system 'grizzl)
+(add-hook 'projectile-mode-hook 'projectile-rails-on)
 (global-set-key (kbd "C-x p") 'projectile-find-file)
 (global-set-key (kbd "C-x b") 'projectile-switch-to-buffer)
 
@@ -162,6 +167,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector ["black" "red3" "green3" "yellow3" "blue2" "magenta3" "cyan3" "gray90"])
+ '(custom-safe-themes (quote ("1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc2782b33667eb932e4ffe9dac475f898bf7c656f8ba60e2276704fabb7fa63b" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "42ac06835f95bc0a734c21c61aeca4286ddd881793364b4e9bc2e7bb8b6cf848" "758da0cfc4ecb8447acb866fb3988f4a41cf2b8f9ca28de9b21d9a68ae61b181" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" default)))
  '(ruby-deep-arglist (quote f)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -1,4 +1,6 @@
-(source melpa)
+(source "gnu" "http://elpa.gnu.org/packages/")
+(source "marmalade" "http://marmalade-repo.org/packages/")
+(source "melpa" "http://melpa.milkbox.net/packages/")
 
 (depends-on "enh-ruby-mode")
 (depends-on "cask")
@@ -14,7 +16,8 @@
 (depends-on "gist")
 (depends-on "grizzl")
 (depends-on "projectile")
+(depends-on "projectile-rails")
+(depends-on "go-projectile")
+(depends-on "helm-projectile")
 (depends-on "robe")
-(depends-on "zenburn-theme")
-(depends-on "cucumber.el")
 (depends-on "github-browse-file")
