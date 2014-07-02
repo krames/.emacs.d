@@ -17,7 +17,7 @@
 (depends-on "grizzl")
 (depends-on "projectile")
 (depends-on "projectile-rails")
+(depends-on "chruby")
 (depends-on "go-projectile")
 (depends-on "helm-projectile")
-(depends-on "robe")
 (depends-on "github-browse-file")
