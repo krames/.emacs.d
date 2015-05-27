@@ -1,6 +1,8 @@
 ;; == package mgmt ==========================================================
 
+;(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el") 
 (require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el")
+;(require 'cask "~/.emacs.d/.cask/24.4.1/elpa/cask-20141109.309/cask.el") 
 (cask-initialize)
 
 ;; -- load everything from dotfiles-init-dir ---------------------------------
@@ -20,19 +22,25 @@
 
 (require 'window-numbering)
 (window-numbering-mode 1)
+(show-paren-mode 1)
 
 (require 'osx-clipboard)
 
 (require 'sanity)
 
 ;;(require 'rails-dev-env)
+;(require 'haml-mode)
+(require 'rvm)
+(require 'rspec-mode)
+(require 'yaml-mode)
+(require 'coffee-mode)
 
-(require 'chruby)
-(chruby "ruby-2.1.2")
+(add-hook 'ruby-mode-hook
+          (lambda () (rvm-activate-corresponding-ruby)))
 
 ;; == window control =========================================================
-(add-to-list 'default-frame-alist '(height . 50))
-(add-to-list 'default-frame-alist '(width . 100))
+;(add-to-list 'default-frame-alist '(height . 50))
+;(add-to-list 'default-frame-alist '(width . 100))
 
 (global-set-key "\C-c=" 'v-resize)
 (global-set-key "\C-c}" 'h-resize)
@@ -83,24 +91,29 @@
 ;; TODO turn off linum in multi-term dammit!
 
 ;; -- look -------------------------------------------------------------------
-(setq default-line-spacing 5)
-(set-default-font "Monaco-13")
+;(setq default-line-spacing 5)
+(set-default-font "Monaco-14")
 
 ;; -- coding -----------------------------------------------------------------
 (setq tags-table-list
   '("./TAGS"))
 
 (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rabl" . enh-ruby-mode))
 (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("Guardfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.yml$" . enh-ruby-mode))
+;(add-to-list 'auto-mode-alist '("\\.yml$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 (setq enh-ruby-bounce-deep-indent 1)
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+
+(autoload 'scss-mode "scss-mode")
+(add-to-list 'auto-mode-alist '("\\.scss\\'" . scss-mode))
 
 
 ;; == themes =================================================================
@@ -108,7 +121,10 @@
 ;; It's in Cask now instead /themes. Yay!
 ;(load-theme 'misterioso t)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/blackboard-theme")
-(load-theme 'blackboard t) 
+ (if window-system
+     (load-theme 'blackboard t) 
+	(load-theme 'wombat t))
+
 
 ;; == projectile setup from http://crypt.codemancers.com/posts/2013-09-26-setting-up-emacs-as-development-environment-on-osx/?utm_source=rubyweekly&utm_medium=email
 
@@ -149,6 +165,9 @@
                        ))
 (real-global-auto-complete-mode t)
 
+; http://www.jefftk.com/p/emacs-auto-revert-mode
+(global-auto-revert-mode 1)
+
 ;; == multi-term
 (global-unset-key (kbd "C-x m"))
 (define-key global-map (kbd "C-x m") 'multi-term)
@@ -161,6 +180,7 @@
 ;; == ruby
 
 (add-hook 'ruby-mode-hook 'auto-complete-mode)
+(add-hook 'before-save-hook #'gofmt-before-save)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -177,3 +197,23 @@
  ;; If there is more than one, they won't work right.
  )
 
+(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin" ":" "/Users/krames/.gvm/gos/go1.3.1/bin/"))
+(setenv "GOPATH" "/Users/krames/.gvm/pkgsets/go1.3.1/global")
+(setq exec-path (append exec-path (list "/usr/local/bin" "/Users/krames/.gvm/pkgsets/go1.3.1/global/bin" "/Users/krames/.gvm/gos/go1.3.1/bin" "/Users/krames/.gvm/pkgsets/go1.3.1/global/overlay/bin" "/Users/krames/.gvm/bin" "/Users/krames/.gvm/bin")))
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+(add-to-list 'load-path "~/.emacs.d/vendor/")
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(defun my-go-mode-hook ()
+  ; Use goimports instead of go-fmt
+  (setq gofmt-command "goimports")
+  ; Call Gofmt before saving
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  ; Customize compile command to run go build
+  (if (not (string-match "go" compile-command))
+      (set (make-local-variable 'compile-command)
+           "go build -v && go test -v && go vet"))
+  ; Godef jump key binding
+  (local-set-key (kbd "M-.") 'godef-jump))
+(add-hook 'go-mode-hook 'my-go-mode-hook)
