@@ -1,8 +1,10 @@
 ;; == package mgmt ==========================================================
 
 ;(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el") 
-(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el")
+;(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el")
 ;(require 'cask "~/.emacs.d/.cask/24.4.1/elpa/cask-20141109.309/cask.el") 
+;(require 'cask "/Users/krames/.emacs.d/.cask/24.4.1/elpa/cask-20150503.846/cask.el")
+(require 'cask "/usr/local/share/emacs/site-lisp/cask.el")
 (cask-initialize)
 
 ;; -- load everything from dotfiles-init-dir ---------------------------------
@@ -34,6 +36,8 @@
 (require 'rspec-mode)
 (require 'yaml-mode)
 (require 'coffee-mode)
+;(require 'protobuf-mode)
+
 
 (add-hook 'ruby-mode-hook
           (lambda () (rvm-activate-corresponding-ruby)))
@@ -217,3 +221,7 @@
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+
+(setq-default indent-tabs-mode nil)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
