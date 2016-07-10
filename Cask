@@ -30,4 +30,4 @@
 (depends-on "scala-mode2")
 (depends-on "go-autocomplete")
 (depends-on "protobuf-mode")
-(depends-on "jsx-mode")
+(depends-on "inf-ruby")
