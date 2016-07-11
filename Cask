@@ -31,3 +31,4 @@
 (depends-on "chruby")
 (depends-on "slim-mode")
 (depends-on "inf-ruby")
+(depends-on "smart-mode-line")
