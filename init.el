@@ -1,10 +1,6 @@
 ;; == package mgmt ==========================================================
 
-;(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el") 
-;(require 'cask "~/.emacs.d/.cask/24.3.1/elpa/cask-20140610.731/cask.el")
-;(require 'cask "~/.emacs.d/.cask/24.4.1/elpa/cask-20141109.309/cask.el") 
-;(require 'cask "/Users/krames/.emacs.d/.cask/24.4.1/elpa/cask-20150503.846/cask.el")
-(require 'cask "/usr/local/share/emacs/site-lisp/cask.el")
+(require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 
 ;; -- load everything from dotfiles-init-dir ---------------------------------
@@ -27,20 +23,22 @@
 (show-paren-mode 1)
 
 (require 'osx-clipboard)
-
-(require 'sanity)
+(require 'uniquify)
+;(require 'sanity)
 
 ;;(require 'rails-dev-env)
 ;(require 'haml-mode)
-(require 'rvm)
+;(require 'rvm)
 (require 'rspec-mode)
 (require 'yaml-mode)
 (require 'coffee-mode)
-;(require 'protobuf-mode)
+(require 'chruby)
+                                        ;(require 'protobuf-mode)
+(require 'slim-mode)
 
 
-(add-hook 'ruby-mode-hook
-          (lambda () (rvm-activate-corresponding-ruby)))
+;(add-hook 'ruby-mode-hook
+ ;         (lambda () (rvm-activate-corresponding-ruby)))
 
 ;; == window control =========================================================
 ;(add-to-list 'default-frame-alist '(height . 50))
@@ -113,6 +111,8 @@
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 (setq enh-ruby-bounce-deep-indent 1)
+(add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+(add-hook 'after-init-hook 'inf-ruby-switch-setup)
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
@@ -126,7 +126,7 @@
 ;(load-theme 'misterioso t)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/blackboard-theme")
  (if window-system
-     (load-theme 'blackboard t) 
+     (load-theme 'blackboard t)
 	(load-theme 'wombat t))
 
 
@@ -144,7 +144,7 @@
 
 
 ;; ==  Hey, backspace, work right, dammit!
-(normal-erase-is-backspace-mode 0)
+(normal-erase-is-backspace-mode 1)
 
 ;; == browse on github
 (global-set-key (kbd "C-c o") 'github-browse-file)
@@ -201,9 +201,9 @@
  ;; If there is more than one, they won't work right.
  )
 
-(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin" ":" "/Users/krames/.gvm/gos/go1.3.1/bin/"))
-(setenv "GOPATH" "/Users/krames/.gvm/pkgsets/go1.3.1/global")
-(setq exec-path (append exec-path (list "/usr/local/bin" "/Users/krames/.gvm/pkgsets/go1.3.1/global/bin" "/Users/krames/.gvm/gos/go1.3.1/bin" "/Users/krames/.gvm/pkgsets/go1.3.1/global/overlay/bin" "/Users/krames/.gvm/bin" "/Users/krames/.gvm/bin")))
+(setenv "PATH" (concat (getenv "PATH") ":" "/usr/local/bin" ":" "/Users/krames/.go/bin/"))
+(setenv "GOPATH" "/Users/krames/.go")
+(setq exec-path (append exec-path (list "/usr/local/bin" "/Users/krames/.go/bin/")))
 
 (add-hook 'before-save-hook 'gofmt-before-save)
 (add-to-list 'load-path "~/.emacs.d/vendor/")
@@ -225,3 +225,14 @@
 
 (setq-default indent-tabs-mode nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(chruby "ruby-2.3.1")
+
+  ;; define our own super awesome hook that will remove the before-save-hook
+  (defun remove-enh-magic-comment ()
+    (remove-hook 'before-save-hook 'enh-ruby-mode-set-encoding t))
+
+  ;; add the hook to call our super awesome function.
+  (add-hook 'enh-ruby-mode-hook 'remove-enh-magic-comment)
+
+  ;; this is for ruby mode
+  (setq ruby-insert-encoding-magic-comment nil)
