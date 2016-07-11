@@ -240,7 +240,7 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "s-t") 'helm-projectile)
-(global-set-key (kbd "s-g") 'projectile-grep)
+(global-set-key (kbd "s-g") 'projectile-ag)
 
 
 (setq initial-major-mode 'text-mode)
@@ -270,5 +270,3 @@
 (rich-minority-mode 1)
 (setf rm-blacklist "")
 (sml/setup)
-
-
