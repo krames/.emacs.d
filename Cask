@@ -32,3 +32,4 @@
 (depends-on "slim-mode")
 (depends-on "inf-ruby")
 (depends-on "smart-mode-line")
+(depends-on "dash-at-point")

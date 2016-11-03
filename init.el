@@ -1,5 +1,12 @@
 ;; == package mgmt ==========================================================
 
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 (require 'cask "/usr/local/share/emacs/site-lisp/cask/cask.el")
 (cask-initialize)
 
@@ -154,6 +161,7 @@
 ;; == auto-complete-mode
 (auto-complete)
 (auto-complete-mode)
+(add-to-list 'ac-modes 'enh-ruby-mode)
 (add-hook 'ruby-mode-hook
           (lambda ()
             (make-local-variable 'ac-stop-words)
@@ -270,3 +278,5 @@
 (rich-minority-mode 1)
 (setf rm-blacklist "")
 (sml/setup)
+
+(global-set-key "\C-cd" 'dash-at-point)
