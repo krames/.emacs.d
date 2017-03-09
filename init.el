@@ -161,6 +161,7 @@
 ;; == auto-complete-mode
 (auto-complete)
 (auto-complete-mode)
+(add-to-list 'ac-modes 'enh-ruby-mode)
 (add-hook 'ruby-mode-hook
           (lambda ()
             (make-local-variable 'ac-stop-words)
@@ -277,3 +278,5 @@
 (rich-minority-mode 1)
 (setf rm-blacklist "")
 (sml/setup)
+
+(global-set-key "\C-cd" 'dash-at-point)
