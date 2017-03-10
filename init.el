@@ -37,6 +37,7 @@
 (require 'coffee-mode)
 (require 'chruby)
 (require 'slim-mode)
+(require 'web-mode)
 
 
 ;(add-hook 'ruby-mode-hook
@@ -111,6 +112,8 @@
 (add-to-list 'auto-mode-alist '("Guardfile$" . enh-ruby-mode))
 ;(add-to-list 'auto-mode-alist '("\\.yml$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.es6$" . javascript-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 
 (setq enh-ruby-bounce-deep-indent 1)
 (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
@@ -162,10 +165,11 @@
 (auto-complete)
 (auto-complete-mode)
 (add-to-list 'ac-modes 'enh-ruby-mode)
-(add-hook 'ruby-mode-hook
+(add-hook 'enh-ruby-mode
           (lambda ()
             (make-local-variable 'ac-stop-words)
-            (add-to-list 'ac-stop-words "end")))
+            (add-to-list 'ac-stop-words "end")
+            (add-to-list 'ac-stop-words "do")))
 
 
 ; I want it everywhere!
@@ -203,6 +207,7 @@
  '(custom-safe-themes
    (quote
     ("84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc2782b33667eb932e4ffe9dac475f898bf7c656f8ba60e2276704fabb7fa63b" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "42ac06835f95bc0a734c21c61aeca4286ddd881793364b4e9bc2e7bb8b6cf848" "758da0cfc4ecb8447acb866fb3988f4a41cf2b8f9ca28de9b21d9a68ae61b181" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" default)))
+ '(js-indent-level 2)
  '(ruby-deep-arglist (quote f)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

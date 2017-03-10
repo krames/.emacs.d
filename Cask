@@ -33,3 +33,4 @@
 (depends-on "inf-ruby")
 (depends-on "smart-mode-line")
 (depends-on "dash-at-point")
+(depends-on "web-mode")
