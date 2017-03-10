@@ -34,3 +34,4 @@
 (depends-on "smart-mode-line")
 (depends-on "dash-at-point")
 (depends-on "web-mode")
+(depends-on "elixir-mode")
