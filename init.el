@@ -38,7 +38,7 @@
 (require 'chruby)
 (require 'slim-mode)
 (require 'web-mode)
-
+(require 'ruby-tools)
 
 ;(add-hook 'ruby-mode-hook
  ;         (lambda () (rvm-activate-corresponding-ruby)))
@@ -98,25 +98,28 @@
 ;; -- look -------------------------------------------------------------------
 ;(setq default-line-spacing 5)
 (set-default-font "Monaco-14")
+(set-face-attribute 'default t :font "Monaco-14")
+
 
 ;; -- coding -----------------------------------------------------------------
 (setq tags-table-list
   '("./TAGS"))
 
-(add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rabl" . enh-ruby-mode))
-(add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("\\.rake$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Rakefile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Gemfile$" . enh-ruby-mode))
-(add-to-list 'auto-mode-alist '("Guardfile$" . enh-ruby-mode))
-;(add-to-list 'auto-mode-alist '("\\.yml$" . enh-ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rb$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rabl" . ruby-mode))
+(add-to-list 'interpreter-mode-alist '("ruby" . ruby-mode))
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
+(add-to-list 'auto-mode-alist '("Guardfile$" . ruby-mode))
+;(add-to-list 'auto-mode-alist '("\\.yml$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.es6$" . javascript-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.vue" . vue-mode))
 
-(setq enh-ruby-bounce-deep-indent 1)
-(add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode)
+(setq enh-ruby-bounce-deep-indent t)
+(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
 (add-hook 'after-init-hook 'inf-ruby-switch-setup)
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
@@ -133,6 +136,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/vendor/blackboard-theme")
  (if window-system
      (load-theme 'blackboard t)
+;;     (load-theme 'tsdh-light t)
 	(load-theme 'wombat t))
 
 
@@ -140,13 +144,14 @@
 
 ;; == projectile
 
-(require 'grizzl)
+(require 'ivy)
 (projectile-global-mode)
 (setq projectile-enable-caching t)
-(setq projectile-completion-system 'grizzl)
+(setq projectile-completion-system 'ivy)
 (add-hook 'projectile-mode-hook 'projectile-rails-on)
-(global-set-key (kbd "C-x p") 'projectile-find-file)
-(global-set-key (kbd "C-x b") 'projectile-switch-to-buffer)
+;(global-set-key (kbd "C-x p") 'projectile-find-file)
+;(global-set-key (kbd "C-x b") 'projectile-switch-to-buffer)
+(global-set-key (kbd "C-c p k") 'projectile-kill-buffers)
 
 ;; ==  Hey, backspace, work right, dammit!
 (normal-erase-is-backspace-mode 1)
@@ -165,7 +170,8 @@
 (auto-complete)
 (auto-complete-mode)
 (add-to-list 'ac-modes 'enh-ruby-mode)
-(add-hook 'enh-ruby-mode
+
+(add-hook 'enh-ruby-mode-hook
           (lambda ()
             (make-local-variable 'ac-stop-words)
             (add-to-list 'ac-stop-words "end")
@@ -202,12 +208,18 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["black" "red3" "green3" "yellow3" "blue2" "magenta3" "cyan3" "gray90"])
  '(custom-safe-themes
    (quote
-    ("84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc2782b33667eb932e4ffe9dac475f898bf7c656f8ba60e2276704fabb7fa63b" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "42ac06835f95bc0a734c21c61aeca4286ddd881793364b4e9bc2e7bb8b6cf848" "758da0cfc4ecb8447acb866fb3988f4a41cf2b8f9ca28de9b21d9a68ae61b181" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "04c89cb30db1e9335a1f8e62307d3ba0e5ae5a007858497f376bc7a441953b3c" "84d2f9eeb3f82d619ca4bfffe5f157282f4779732f48a5ac1484d94d5ff5b279" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "1e7e097ec8cb1f8c3a912d7e1e0331caeed49fef6cff220be63bd2a6ba4cc365" "fc2782b33667eb932e4ffe9dac475f898bf7c656f8ba60e2276704fabb7fa63b" "fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6" "75c9f0b0499ecdd0c856939a5de052742d85af81814e84faa666522c2bba7e85" "42ac06835f95bc0a734c21c61aeca4286ddd881793364b4e9bc2e7bb8b6cf848" "758da0cfc4ecb8447acb866fb3988f4a41cf2b8f9ca28de9b21d9a68ae61b181" "f0ea6118d1414b24c2e4babdc8e252707727e7b4ff2e791129f240a2b3093e32" default)))
+ '(helm-buffer-max-length 35)
  '(js-indent-level 2)
+ '(package-selected-packages
+   (quote
+    (rainbow-delimiters go-autocomplete ## all-the-icons gotest vue-mode ac-ispell helm-spotify yaml-mode web-mode smex smart-mode-line slim-mode sass-mode ruby-tools ruby-end rspec-mode protobuf-mode projectile-rails multi-term markdown-mode magit helm-projectile grizzl go-projectile github-browse-file gist full-ack flx-ido enh-ruby-mode elixir-mode dash-at-point coffee-mode chruby cask ag)))
  '(ruby-deep-arglist (quote f)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -221,7 +233,7 @@
 (setq exec-path (append exec-path (list "/usr/local/bin" "/Users/krames/.go/bin/")))
 
 (add-to-list 'load-path "~/.emacs.d/vendor/")
-(require 'go-autocomplete)
+
 (require 'auto-complete-config)
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
@@ -239,7 +251,7 @@
 (setq-default indent-tabs-mode nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(chruby "ruby-2.3.1")
+(chruby "ruby-2.5.2")
 
   ;; define our own super awesome hook that will remove the before-save-hook
   (defun remove-enh-magic-comment ()
@@ -284,4 +296,15 @@
 (setf rm-blacklist "")
 (sml/setup)
 
-(global-set-key "\C-cd" 'dash-at-point)
+(add-to-list 'dash-at-point-mode-alist '(enh-ruby-mode . "ruby,rubygems,rails"))
+(global-set-key (kbd "s-d") 'dash-at-point)
+(put 'upcase-region 'disabled nil)
+
+
+(setq ispell-program-name "/usr/local/bin/aspell")
+
+(require 'gotest)
+(define-key go-mode-map (kbd "C-c , v") 'go-test-current-file)
+(define-key go-mode-map (kbd "C-c , s") 'go-test-current-test)
+
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)

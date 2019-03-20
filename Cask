@@ -1,5 +1,5 @@
 (source "gnu" "http://elpa.gnu.org/packages/")
-(source "marmalade" "http://marmalade-repo.org/packages/")
+(source "marmalade" "https://marmalade-repo.org/packages/")
 (source "melpa" "http://melpa.milkbox.net/packages/")
 
 (depends-on "enh-ruby-mode")
@@ -35,3 +35,10 @@
 (depends-on "dash-at-point")
 (depends-on "web-mode")
 (depends-on "elixir-mode")
+(depends-on "ruby-tools")
+(depends-on "go-mode")
+(depends-on "gotest")
+(depends-on "ivy")
+(depends-on "vue-mode")
+(depends-on "vue-html-mode")
+(depends-on "all-the-icons")
