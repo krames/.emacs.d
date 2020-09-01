@@ -97,8 +97,8 @@
 
 ;; -- look -------------------------------------------------------------------
 ;(setq default-line-spacing 5)
-(set-default-font "Monaco-14")
-(set-face-attribute 'default t :font "Monaco-14")
+(set-default-font "Monaco-16")
+(set-face-attribute 'default t :font "Monaco-16")
 
 
 ;; -- coding -----------------------------------------------------------------
@@ -112,15 +112,15 @@
 (add-to-list 'auto-mode-alist '("Rakefile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Gemfile$" . ruby-mode))
 (add-to-list 'auto-mode-alist '("Guardfile$" . ruby-mode))
-;(add-to-list 'auto-mode-alist '("\\.yml$" . ruby-mode))
+;(add-to-list 'auto-mode-alist '("\\.yml$" . enh-ruby-mode))
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 (add-to-list 'auto-mode-alist '("\\.es6$" . javascript-mode))
 (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.vue" . vue-mode))
 
 (setq enh-ruby-bounce-deep-indent t)
-(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
-(add-hook 'after-init-hook 'inf-ruby-switch-setup)
+;;(add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+;;(add-hook 'after-init-hook 'inf-ruby-switch-setup)
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
@@ -173,6 +173,7 @@
 
 (add-hook 'enh-ruby-mode-hook
           (lambda ()
+            (rspec-mode 1)
             (make-local-variable 'ac-stop-words)
             (add-to-list 'ac-stop-words "end")
             (add-to-list 'ac-stop-words "do")))
@@ -219,7 +220,7 @@
  '(js-indent-level 2)
  '(package-selected-packages
    (quote
-    (rainbow-delimiters go-autocomplete ## all-the-icons gotest vue-mode ac-ispell helm-spotify yaml-mode web-mode smex smart-mode-line slim-mode sass-mode ruby-tools ruby-end rspec-mode protobuf-mode projectile-rails multi-term markdown-mode magit helm-projectile grizzl go-projectile github-browse-file gist full-ack flx-ido enh-ruby-mode elixir-mode dash-at-point coffee-mode chruby cask ag)))
+    (graphql-mode dockerfile-mode rainbow-delimiters go-autocomplete ## all-the-icons gotest vue-mode ac-ispell helm-spotify yaml-mode web-mode smex smart-mode-line slim-mode sass-mode ruby-tools ruby-end rspec-mode protobuf-mode projectile-rails multi-term markdown-mode magit helm-projectile grizzl go-projectile github-browse-file gist full-ack flx-ido enh-ruby-mode elixir-mode dash-at-point coffee-mode chruby cask ag)))
  '(ruby-deep-arglist (quote f)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -251,7 +252,7 @@
 (setq-default indent-tabs-mode nil)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-(chruby "ruby-2.5.2")
+(chruby "ruby-2.7.1")
 
   ;; define our own super awesome hook that will remove the before-save-hook
   (defun remove-enh-magic-comment ()
@@ -308,3 +309,12 @@
 (define-key go-mode-map (kbd "C-c , s") 'go-test-current-test)
 
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+
+;; (setq rspec-docker-container "web")
+;; (setq rspec-use-docker-when-possible t)
+;; (setq rspec-docker-cwd "/opt/spinweb/")
+
+;; (setq rspec-docker-container "mds")
+;; (setq rspec-use-docker-when-possible t)
+;; (setq rspec-docker-cwd "/opt/mds/")

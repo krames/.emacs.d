@@ -1,6 +1,6 @@
 (source "gnu" "http://elpa.gnu.org/packages/")
 (source "marmalade" "https://marmalade-repo.org/packages/")
-(source "melpa" "http://melpa.milkbox.net/packages/")
+(source "melpa" "https://melpa.org/packages/")
 
 (depends-on "enh-ruby-mode")
 (depends-on "cask")
@@ -41,4 +41,5 @@
 (depends-on "ivy")
 (depends-on "vue-mode")
 (depends-on "vue-html-mode")
-(depends-on "all-the-icons")
+(depends-on "rspec-mode")
+(depends-on "rainbow-delimiters")
